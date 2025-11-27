@@ -162,6 +162,33 @@
           }
         }
       }
+    },
+    "clr-addons": {
+      "projectType": "library",
+      "root": "projects/addons",
+      "sourceRoot": "projects/addons",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/addons/tsconfig.lib.json",
+            "project": "projects/addons/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/addons/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/addons/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        }
+      }
     }
   }
 }
