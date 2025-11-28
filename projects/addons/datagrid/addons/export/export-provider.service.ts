@@ -113,15 +113,15 @@ export class ExportProviderService {
       }
       const valA = (a as any)[forField];
       const valB = (b as any)[forField];
-      if (valA == null) {
-        if (valB == null) {
+      if (valA === null || valA === undefined) {
+        if (valB === null || valB === undefined) {
           return 0;
         } else {
           return 1;
         }
       }
 
-      if (valB == null) {
+      if (valB === null || valB === undefined) {
         return -1;
       }
 

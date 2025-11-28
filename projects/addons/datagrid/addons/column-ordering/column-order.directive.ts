@@ -35,6 +35,8 @@ export class ColumnOrderDirective implements OnDestroy, OnInit {
 
   @Input() columnIndex: number;
 
+  private subs = new Subscription();
+
   constructor(
     private readonly datagrid: ClrDatagrid,
     readonly elementRef: ElementRef<HTMLElement>,
@@ -44,8 +46,6 @@ export class ColumnOrderDirective implements OnDestroy, OnInit {
   ) {
     cdkDrag.previewContainer = 'parent';
   }
-
-  private subs = new Subscription();
 
   @HostListener('keydown', ['$event'])
   keydown(event: KeyboardEvent) {

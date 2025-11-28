@@ -291,15 +291,6 @@ class TestClrDatagridHostComponent {
 
   @ViewChild(CdkDropList) cdkDropListDirective: CdkDropList;
 
-  trackByColumnId(index: number, column: ColumnDefinition<any>) {
-    return column.uid || column.displayName;
-  }
-
-  onColumnOrderChange(data: ColumnOrderChanged) {
-    this.columns = data.columns;
-    this.visibleColumns = this.columns.filter((column: ColumnDefinition<any>) => !column.hidden);
-  }
-
   data: any[] = [
     {
       status: 'unknown',
@@ -309,14 +300,24 @@ class TestClrDatagridHostComponent {
     },
   ];
   visibleColumns: ColumnDefinition<any>[];
+
   #columns: ColumnDefinition<any>[];
+
+  get columns() {
+    return this.#columns;
+  }
 
   set columns(values: ColumnDefinition<any>[]) {
     this.#columns = values;
     this.visibleColumns = this.columns.filter((column: ColumnDefinition<any>) => !column.hidden);
   }
 
-  get columns() {
-    return this.#columns;
+  trackByColumnId(index: number, column: ColumnDefinition<any>) {
+    return column.uid || column.displayName;
+  }
+
+  onColumnOrderChange(data: ColumnOrderChanged) {
+    this.columns = data.columns;
+    this.visibleColumns = this.columns.filter((column: ColumnDefinition<any>) => !column.hidden);
   }
 }

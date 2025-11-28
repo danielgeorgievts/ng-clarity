@@ -72,7 +72,7 @@ export class DataGridFiltersComponent implements OnDestroy, AfterViewInit {
    */
   @Input()
   set filterMode(filterMode: FilterMode) {
-    if (filterMode != null) {
+    if (filterMode !== null && filterMode !== undefined) {
       this.mode = filterMode;
     }
   }

@@ -93,7 +93,7 @@ export class GridHelper {
     // these columns are present
     if (Array.isArray(includeLabelList)) {
       gridHeaderLabelList.forEach((headerLabel, index) => {
-        expect(headerLabel).toEqual(includeLabelList[index]!, `Cannot find "${headerLabel}" column.`);
+        expect(headerLabel).toEqual(includeLabelList[index], `Cannot find "${headerLabel}" column.`);
       });
     }
 
@@ -473,7 +473,7 @@ export class GridRowTestHelper {
             ).toBe(true);
           } else {
             // scalar value
-            expect(gridCell.getText()).toEqual('' + cellValue!);
+            expect(gridCell.getText()).toEqual(String(cellValue));
           }
         } else {
           // undefined means the cell must not be present
@@ -497,7 +497,7 @@ export class GridRowTestHelper {
       excludeValueList.forEach((cellValue, index) => {
         const gridCell = this.getCellAt(index);
         if (cellValue !== undefined) {
-          expect(gridCell.getText()).not.toEqual('' + cellValue!);
+          expect(gridCell.getText()).not.toEqual(String(cellValue));
         } else {
           // undefined means the cell must not be present
           expect(gridCell.getElement()).not.toBeNull(`There is a no cell at position index ${index}.`);
@@ -651,7 +651,7 @@ export class GridCellTestHelper {
       return null;
     }
 
-    return selector ? matchedElement.querySelector(selector!) : matchedElement;
+    return selector ? matchedElement.querySelector(selector) : matchedElement;
   }
 
   // common icons follow the accepted practice of being wrapped in spanned element annotated with "object"
@@ -681,6 +681,6 @@ export class GridPlaceholder {
   }
 
   getText(): string | undefined {
-    return this.placeholderComponentElement ? this.placeholderComponentElement.textContent!.trim() : undefined;
+    return this.placeholderComponentElement ? this.placeholderComponentElement.textContent.trim() : undefined;
   }
 }

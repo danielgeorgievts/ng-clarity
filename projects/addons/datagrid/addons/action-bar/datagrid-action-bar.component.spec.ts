@@ -286,7 +286,7 @@ describe('DatagridActionBarComponent', function () {
         this.fixture.debugElement.query(By.css('clr-dropdown > button')).triggerEventHandler('click', {});
         this.fixture.detectChanges();
 
-        const action: ActionDefinition = last(this.actionsToFitScreen)!;
+        const action: ActionDefinition = last(this.actionsToFitScreen);
         expect(
           this.fixture.debugElement.query(By.css(`clr-dropdown-menu button[data-test-id='${action.id}']`))
         ).toBeTruthy();
@@ -394,7 +394,7 @@ describe('DatagridActionBarComponent', function () {
       describe('AND an action button from the dropdown is clicked', function () {
         beforeEach(function (this: ThisTest) {
           this.fixture.debugElement
-            .query(By.css(`clr-dropdown-menu button[data-test-id='${last(this.actionsNotFittingScreen)!.id}']`))
+            .query(By.css(`clr-dropdown-menu button[data-test-id='${last(this.actionsNotFittingScreen)?.id}']`))
             .triggerEventHandler('click', {});
         });
 
@@ -423,7 +423,7 @@ describe('DatagridActionBarComponent', function () {
             <ActionDefinition>{
               id: action.id,
               label: action.label,
-              enabled: action.id !== last(this.actionsNotFittingScreen)!.id,
+              enabled: action.id !== last(this.actionsNotFittingScreen)?.id,
             }
         );
         this.fixture.detectChanges();
@@ -434,7 +434,7 @@ describe('DatagridActionBarComponent', function () {
         this.fixture.detectChanges();
         expect(
           this.fixture.debugElement.query(
-            By.css(`clr-dropdown-menu button[data-test-id='${last(this.actionsNotFittingScreen)!.id}']`)
+            By.css(`clr-dropdown-menu button[data-test-id='${last(this.actionsNotFittingScreen)?.id}']`)
           ).nativeElement.attributes['disabled']
         ).toBeTruthy();
       });

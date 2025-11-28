@@ -48,13 +48,14 @@ export class DatagridActionBarComponent implements OnInit, OnChanges, AfterViewI
 
   @Output() invokeAction: EventEmitter<ActionDefinition> = new EventEmitter();
 
-  private listOfWidths: number[] = [];
+  readonly actionsSubject = new BehaviorSubject<ActionDefinition[]>([]);
+  readonly actions$ = this.actionsSubject.asObservable();
+
   isDropdownOpened = false;
 
   #subscription: Subscription;
 
-  readonly actionsSubject = new BehaviorSubject<ActionDefinition[]>([]);
-  readonly actions$ = this.actionsSubject.asObservable();
+  private listOfWidths: number[] = [];
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -95,6 +96,27 @@ export class DatagridActionBarComponent implements OnInit, OnChanges, AfterViewI
         this.updateLayout();
       }
     }
+  }
+
+  getDropdownActions(): ActionDefinition[] {
+    return this.actions.filter((action: ActionDefinition) => !action.isVisible);
+  }
+
+  hasDropdownActions(): boolean {
+    return this.getDropdownActions().length > 0;
+  }
+
+  onActionClick(action: ActionDefinition): void {
+    if (action.enabled) {
+      this.invokeAction.emit(action);
+    }
+  }
+
+  /**
+   * Derives the base root element size (REM) in pixels.
+   */
+  deriveBaseRootElementSize(): number {
+    return parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('font-size'), 10);
   }
 
   private isActionsIdsEqual(change: SimpleChange): boolean {
@@ -144,20 +166,6 @@ export class DatagridActionBarComponent implements OnInit, OnChanges, AfterViewI
     );
   }
 
-  getDropdownActions(): ActionDefinition[] {
-    return this.actions.filter((action: ActionDefinition) => !action.isVisible);
-  }
-
-  hasDropdownActions(): boolean {
-    return this.getDropdownActions().length > 0;
-  }
-
-  onActionClick(action: ActionDefinition): void {
-    if (action.enabled) {
-      this.invokeAction.emit(action);
-    }
-  }
-
   private updateLayout(): void {
     // If offset is 0, the element is not yet fully loaded, so no need to update the layout
     if (this.el.nativeElement.offsetWidth) {
@@ -175,12 +183,5 @@ export class DatagridActionBarComponent implements OnInit, OnChanges, AfterViewI
       }
       this.actionsSubject.next(this.actions);
     }
-  }
-
-  /**
-   * Derives the base root element size (REM) in pixels.
-   */
-  deriveBaseRootElementSize(): number {
-    return parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('font-size'), 10);
   }
 }

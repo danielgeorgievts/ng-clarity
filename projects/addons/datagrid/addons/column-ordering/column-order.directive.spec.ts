@@ -235,10 +235,6 @@ class TestDirective {
 class TestClrDatagridHostComponent {
   @ViewChild(TestDirective) content: TestDirective;
 
-  trackByColumnId(index: number, column: ColumnDefinition<any>) {
-    return column.uid || column.displayName;
-  }
-
   data: any[] = [
     {
       status: 'unknown',
@@ -263,4 +259,8 @@ class TestClrDatagridHostComponent {
       field: 'status',
     },
   ];
+
+  trackByColumnId(index: number, column: ColumnDefinition<any>) {
+    return column.uid || column.displayName;
+  }
 }

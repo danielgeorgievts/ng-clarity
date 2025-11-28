@@ -5,7 +5,6 @@
  * The full license information can be found in LICENSE in the root directory of this project.
  */
 
-/* eslint-disable sonarjs/no-duplicate-string */
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkConnectedOverlay, CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import { Component, ViewChild } from '@angular/core';
@@ -131,14 +130,14 @@ class DatagridForClientSideGridHostComponent {
 
   @ViewChild(DatagridPreserveSelectionDirective, { static: true }) directive: DatagridPreserveSelectionDirective;
 
-  trackByFunction = (index: number, item: any) => item.name;
-
   preserveSelection = true;
   pageSize = 4;
   data: any[] = allGridData.slice(0, 4);
   selectedItems: any[] = [];
   columnsDefs: ColumnDefinition<any>[] = columns;
   selectionType = SelectionType.Multi;
+
+  trackByFunction = (index: number, item: any) => item.name;
 }
 
 describe('datagrid-preserve-selection-directive.client-side', () => {

@@ -310,7 +310,6 @@ export class GeneralFilterComponent implements OnInit, OnChanges {
     }
   }
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   private convertValue(value: number, sourceUnit: Unit): number {
     if (this.isNumericUnitProperty) {
       const targetUnit = (this.filterProperty as NumericPropertyDefinition).unit;

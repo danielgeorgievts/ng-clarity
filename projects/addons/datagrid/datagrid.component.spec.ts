@@ -5,6 +5,7 @@
  * The full license information can be found in LICENSE in the root directory of this project.
  */
 
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { A11yModule as CdkA11yModule } from '@angular/cdk/a11y';
 import { CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -227,7 +228,7 @@ describe('DatagridComponent', () => {
     rows.forEach((row: GridRowTestHelper, rowIndex: number) => {
       const expectedRow = this.data[rowIndex];
       for (const columnDef of this.columnsDefs) {
-        expect(row.getCell(columnDef.displayName).getCellWrapperElement()!.textContent?.trim()).toEqual(
+        expect(row.getCell(columnDef.displayName).getCellWrapperElement()?.textContent?.trim()).toEqual(
           expectedRow[columnDef.field]
         );
       }
@@ -319,7 +320,7 @@ describe('DatagridComponent', () => {
         } else {
           expectedValue = expectedRow[columnDef.field];
         }
-        expect(row.getCell(columnDef.displayName).getCellWrapperElement()!.textContent?.trim().trim()).toEqual(
+        expect(row.getCell(columnDef.displayName).getCellWrapperElement().textContent?.trim().trim()).toEqual(
           expectedValue
         );
       }
@@ -400,7 +401,7 @@ describe('DatagridComponent', () => {
     rows.forEach((row: GridRowTestHelper, rowIndex: number) => {
       const expectedRow = allGridData[rowIndex];
       for (const columnDef of this.columnsDefs) {
-        expect(row.getCell(columnDef.displayName).getCellWrapperElement()!.textContent?.trim()).toEqual(
+        expect(row.getCell(columnDef.displayName).getCellWrapperElement().textContent?.trim()).toEqual(
           expectedRow[columnDef.field]
         );
       }
@@ -456,7 +457,7 @@ describe('DatagridComponent', () => {
     rows.forEach((row: GridRowTestHelper, rowIndex: number) => {
       const expectedRow = this.data[rowIndex];
       for (const columnDef of this.columnsDefs) {
-        expect(row.getCell(columnDef.displayName).getCellWrapperElement()!.textContent?.trim()).toEqual(
+        expect(row.getCell(columnDef.displayName).getCellWrapperElement().textContent?.trim()).toEqual(
           expectedRow[columnDef.field]
         );
       }
@@ -508,7 +509,7 @@ describe('DatagridComponent', () => {
     rows.forEach((row: GridRowTestHelper, rowIndex: number) => {
       const statusValue = row
         .getCellAt(subjectColumnIndex)
-        .getCellWrapperElement('test-status-renderer span')!
+        .getCellWrapperElement('test-status-renderer span')
         .textContent?.trim()
         .trim();
       expect(statusValue).toEqual(states[rowIndex]);
@@ -563,7 +564,7 @@ describe('DatagridComponent', () => {
           this.fixture.detectChanges(false);
 
           gridHelper.getRows().forEach((row: GridRowTestHelper, rowIndex: number) => {
-            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement()!.textContent?.trim()).toEqual(
+            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement().textContent?.trim()).toEqual(
               states[rowIndex]
             );
           });
@@ -574,7 +575,7 @@ describe('DatagridComponent', () => {
           this.fixture.detectChanges();
 
           gridHelper.getRows().forEach((row: GridRowTestHelper, rowIndex: number) => {
-            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement()!.textContent?.trim()).toEqual(
+            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement().textContent?.trim()).toEqual(
               states[states.length - rowIndex - 1]
             );
           });
@@ -639,7 +640,7 @@ describe('DatagridComponent', () => {
           this.fixture.detectChanges(false);
 
           gridHelper.getRows().forEach((row: GridRowTestHelper, rowIndex: number) => {
-            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement()!.textContent?.trim()).toEqual(
+            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement().textContent?.trim()).toEqual(
               states[rowIndex]
             );
           });
@@ -649,7 +650,7 @@ describe('DatagridComponent', () => {
           this.fixture.detectChanges();
 
           gridHelper.getRows().forEach((row: GridRowTestHelper, rowIndex: number) => {
-            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement()!.textContent?.trim()).toEqual(
+            expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement().textContent?.trim()).toEqual(
               states[states.length - rowIndex - 1]
             );
           });
@@ -1410,7 +1411,7 @@ describe('DatagridComponent', () => {
         for (const columnDef of this.columnsDefs) {
           const expectedRow: any = this.data[rowIndex];
           const subjectColumnIndex = this.columnsDefs.findIndex((col: ColumnDefinition<any>) => col === columnDef);
-          expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement()!.textContent?.trim()).toEqual(
+          expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement().textContent?.trim()).toEqual(
             expectedRow[columnDef.field]
           );
         }
@@ -1426,7 +1427,7 @@ describe('DatagridComponent', () => {
         for (const columnDef of this.columnsDefs) {
           const expectedRow: any = this.data[rowIndex + 2];
           const subjectColumnIndex = this.columnsDefs.findIndex((col: ColumnDefinition<any>) => col === columnDef);
-          expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement()!.textContent?.trim()).toEqual(
+          expect(row.getCellAt(subjectColumnIndex).getCellWrapperElement().textContent?.trim()).toEqual(
             expectedRow[columnDef.field]
           );
         }
@@ -2011,14 +2012,14 @@ interface PowerStateObject {
 class PowerStateFilterComponent implements ClrDatagridFilterInterface<PowerStateObject> {
   #changes: Subject<any> = new Subject<any>();
 
-  get changes(): Observable<ClrDatagridFilterInterface<PowerStateFilterComponent>[]> {
-    return this.#changes.asObservable();
-  }
-
   #poweredOn = true;
   #poweredOff = true;
 
   private readonly vmPowerOnStateColumn: string = 'runtime.powerState.@formatted';
+
+  get changes(): Observable<ClrDatagridFilterInterface<PowerStateFilterComponent>[]> {
+    return this.#changes.asObservable();
+  }
 
   get poweredOn(): boolean {
     return this.#poweredOn;

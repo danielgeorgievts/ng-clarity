@@ -37,6 +37,12 @@ export class DatagridPersistSettingsDirective implements OnDestroy, AfterViewIni
   private datagridKeyChange$ = new Subject<string>();
   private saveColumnsStateTimerId: number;
 
+  private datagridKey: string;
+
+  private storePageSize = true;
+
+  private storeSortOrder = true;
+
   constructor(
     @Host() private grid: DatagridComponent<unknown>,
     @Optional()
@@ -45,8 +51,6 @@ export class DatagridPersistSettingsDirective implements OnDestroy, AfterViewIni
   ) {
     this.initialiseDatagridWithPersistedSettings();
   }
-
-  private datagridKey: string;
 
   /**
    * Directive takes unique identifier input to describe the grid
@@ -57,8 +61,6 @@ export class DatagridPersistSettingsDirective implements OnDestroy, AfterViewIni
     this.datagridKeyChange$.next(key);
   }
 
-  private storePageSize = true;
-
   /**
    * Flag indicates whether to be persisted the grid page size.
    */
@@ -66,8 +68,6 @@ export class DatagridPersistSettingsDirective implements OnDestroy, AfterViewIni
   set persistPageSize(value: boolean) {
     this.storePageSize = value;
   }
-
-  private storeSortOrder = true;
 
   /**
    * Flag indicates whether to be persisted the grid page size.

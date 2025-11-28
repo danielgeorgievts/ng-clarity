@@ -5,6 +5,8 @@
  * The full license information can be found in LICENSE in the root directory of this project.
  */
 
+/* eslint-disable @typescript-eslint/parameter-properties */
+
 import { ComparisonOperator, LogicalOperator, Unit } from './datagrid-filters.enums';
 
 /**
@@ -138,7 +140,7 @@ export class NumericPropertyDefinition extends FilterablePropertyDefinition {
   ) {
     super(displayName, property, operators);
     // Check for null and undefined
-    if (unit != null) {
+    if (unit !== null && unit !== undefined) {
       this.unit = unit;
     }
     if (singleCondition) {
@@ -168,6 +170,7 @@ export class DateTimePropertyDefinition extends FilterablePropertyDefinition {
     ComparisonOperator.TimeSpan,
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(displayName: string, property: string, operators?: ComparisonOperator[]) {
     super(displayName, property, operators);
   }

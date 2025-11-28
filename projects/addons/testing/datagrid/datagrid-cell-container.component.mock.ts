@@ -29,12 +29,11 @@ import {
   `,
 })
 export class MockDatagridCellContainerComponent implements OnInit {
-  @ViewChild('cellContainer', { read: ViewContainerRef, static: true }) protected container: ViewContainerRef;
-
   @Input() column: any;
 
   @Input() item: any;
 
+  @ViewChild('cellContainer', { read: ViewContainerRef, static: true }) protected container: ViewContainerRef;
   private componentRef: ComponentRef<any> | null;
   private instance: any;
 
@@ -44,7 +43,7 @@ export class MockDatagridCellContainerComponent implements OnInit {
     if (this.column.columnRenderer) {
       const factory = this.componentFactoryResolver.resolveComponentFactory(this.column.columnRenderer);
       this.componentRef = this.container.createComponent(factory);
-      this.instance = <any>this.componentRef!.instance;
+      this.instance = <any>this.componentRef?.instance;
       this.instance.item = this.item;
       this.instance.column = this.column;
     }

@@ -48,7 +48,7 @@ export class DatagridCellContainerComponent implements OnInit, OnDestroy, OnChan
   ngOnInit(): void {
     if (this.column.columnRenderer) {
       this.componentRef = this.container.createComponent(this.column.columnRenderer);
-      this.instance = <ColumnRenderer<any>>this.componentRef!.instance;
+      this.instance = <ColumnRenderer<any>>this.componentRef?.instance;
       this.instance.item = this.item || {};
       this.instance.column = this.column;
     }

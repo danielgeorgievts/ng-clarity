@@ -21,15 +21,17 @@ import { DatagridComponent } from '../../datagrid.component';
   standalone: false,
 })
 export class DatagridPageDirective implements AfterViewInit, OnDestroy {
-  private component: DatagridComponent<unknown>;
+  @Output() datagridPageChange = new EventEmitter<number>(false);
 
-  constructor(@Host() datagrid: DatagridComponent<unknown>) {
-    this.component = datagrid;
-  }
+  private component: DatagridComponent<unknown>;
 
   private initCompleted = false;
   private initialPage: number;
   private subscription: Subscription;
+
+  constructor(@Host() datagrid: DatagridComponent<unknown>) {
+    this.component = datagrid;
+  }
 
   @Input()
   set datagridPage(value: number) {
@@ -39,8 +41,6 @@ export class DatagridPageDirective implements AfterViewInit, OnDestroy {
       this.initialPage = value;
     }
   }
-
-  @Output() datagridPageChange = new EventEmitter<number>(false);
 
   ngAfterViewInit(): void {
     this.subscription = this.component.clrDatagridPagination.currentChanged.subscribe((page: number) =>

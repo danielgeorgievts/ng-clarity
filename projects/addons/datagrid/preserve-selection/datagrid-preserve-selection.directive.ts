@@ -78,16 +78,6 @@ export const appfxPreselectableComponentToken = new InjectionToken<Preselectable
   standalone: false,
 })
 export class DatagridPreserveSelectionDirective implements AfterViewInit, OnDestroy {
-  private component: PreselectableComponent;
-
-  constructor(
-    @Inject(appfxPreselectableComponentToken)
-    @Host()
-    public preselectableComponent: PreselectableComponent
-  ) {
-    this.component = preselectableComponent;
-  }
-
   /**
    * preserveSelection - needed mainly because of list-view component and
    * indicates whether grid should preserve the selection based on 'trackByFunction' or
@@ -97,9 +87,19 @@ export class DatagridPreserveSelectionDirective implements AfterViewInit, OnDest
 
   @Output() selectedItemsUpdated = new EventEmitter<any[]>();
 
+  private component: PreselectableComponent;
+
   private selectBy: string | TrackByFunction<any>;
 
   private gridItemChangeSub: Subscription;
+
+  constructor(
+    @Inject(appfxPreselectableComponentToken)
+    @Host()
+    public preselectableComponent: PreselectableComponent
+  ) {
+    this.component = preselectableComponent;
+  }
 
   ngAfterViewInit(): void {
     if (this.preserveExistingSelection) {
@@ -178,8 +178,8 @@ export class DatagridPreserveSelectionDirective implements AfterViewInit, OnDest
       const itemPropertyValue = this.getItemUniquePropertyValue(item);
       selectedItemsDic.set(itemPropertyValue, item);
       if (storeItemsAndIndexes) {
-        selectedItems!.push(item);
-        selectedItemIndexByRef!.set(itemPropertyValue, index);
+        selectedItems?.push(item);
+        selectedItemIndexByRef?.set(itemPropertyValue, index);
       }
     });
     return selectedItemsDic;

@@ -242,14 +242,14 @@ class DatagridForClientSideGridHostComponent {
   currentPageIndex = 3;
   newPageIndex = 0;
 
-  gridPageChange(page: number) {
-    this.newPageIndex = page;
-  }
-
   pageSize = 4;
   data: any[] = allGridData.slice(0, 4);
   columnsDefs: ColumnDefinition<any>[] = columns;
   selectionType = SelectionType.None;
+
+  gridPageChange(page: number) {
+    this.newPageIndex = page;
+  }
 }
 
 @Component({
@@ -275,10 +275,6 @@ class DatagridForServerSideGridHostComponent {
 
   @ViewChild(DatagridPageDirective, { static: true }) newPageIndex = 0;
 
-  gridPageChange(page: number) {
-    this.newPageIndex = page;
-  }
-
   currentPageIndex = 5;
   data: any[] = [];
   allData: any[] = allGridData;
@@ -286,6 +282,10 @@ class DatagridForServerSideGridHostComponent {
   columnsDefs: ColumnDefinition<any>[] = columns;
   selectionType = SelectionType.None;
   currentState: any;
+
+  gridPageChange(page: number) {
+    this.newPageIndex = page;
+  }
 
   refreshData(state: any) {
     this.currentState = state;

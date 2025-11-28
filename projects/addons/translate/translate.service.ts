@@ -101,12 +101,12 @@ export class AppfxTranslateService {
     private readonly emptyTranslationKeyCallback: EmptyTranslationCallback
   ) {}
 
-  set locale(locale: AppfxLocale) {
-    AppfxTranslateService.localeSubject.next(locale);
-  }
-
   get locale(): AppfxLocale {
     return AppfxTranslateService.localeSubject.value;
+  }
+
+  set locale(locale: AppfxLocale) {
+    AppfxTranslateService.localeSubject.next(locale);
   }
 
   /**

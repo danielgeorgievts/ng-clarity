@@ -47,6 +47,12 @@ export class DatagridColumnToggleComponent implements OnDestroy {
 
   constructor(public dgStrings: DatagridStrings) {}
 
+  get hasOnlyOneVisibleColumn(): boolean {
+    const hideableColumns = this.hideableColumns();
+    const nonHideableColumns = this.columns.length - hideableColumns.length;
+    return nonHideableColumns === 0 && hideableColumns.filter(column => !column.hidden).length === 1;
+  }
+
   ngOnDestroy() {
     this.openState = false;
   }
@@ -61,32 +67,12 @@ export class DatagridColumnToggleComponent implements OnDestroy {
     this.viewId = undefined;
   }
 
-  get hasOnlyOneVisibleColumn(): boolean {
-    const hideableColumns = this.hideableColumns();
-    const nonHideableColumns = this.columns.length - hideableColumns.length;
-    return nonHideableColumns === 0 && hideableColumns.filter(column => !column.hidden).length === 1;
-  }
-
   showColumn(colUid: string) {
     this.showHideColumn(colUid, false);
   }
 
   hideColumn(colUid: string) {
     this.showHideColumn(colUid, true);
-  }
-
-  private showHideColumn(colUid: string, hide: boolean) {
-    const columnToToggle: ColumnDefinition<any> | undefined = this.columns.find(col => col.uid === colUid);
-    if (!columnToToggle) {
-      return;
-    }
-
-    columnToToggle.hidden = hide;
-    this.columnsChange.emit([...this.columns]);
-    this.columnHiddenStateChange.emit({
-      hidden: hide,
-      column: columnToToggle,
-    });
   }
 
   toggleColumnState(columnToToggle: ColumnDefinition<any>, event?: Event) {
@@ -112,5 +98,19 @@ export class DatagridColumnToggleComponent implements OnDestroy {
   hideableColumns(): ColumnDefinition<any>[] {
     // If column.hideable is not set to false explicitly then column is considered visible
     return this.columns.filter(column => column.hideable !== false);
+  }
+
+  private showHideColumn(colUid: string, hide: boolean) {
+    const columnToToggle: ColumnDefinition<any> | undefined = this.columns.find(col => col.uid === colUid);
+    if (!columnToToggle) {
+      return;
+    }
+
+    columnToToggle.hidden = hide;
+    this.columnsChange.emit([...this.columns]);
+    this.columnHiddenStateChange.emit({
+      hidden: hide,
+      column: columnToToggle,
+    });
   }
 }
